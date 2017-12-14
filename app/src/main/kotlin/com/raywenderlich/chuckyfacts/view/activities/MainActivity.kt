@@ -32,6 +32,7 @@ import android.widget.ProgressBar
 
 import com.raywenderlich.chuckyfacts.MainContract
 import com.raywenderlich.chuckyfacts.R
+import com.raywenderlich.chuckyfacts.entity.JokeModel
 import com.raywenderlich.chuckyfacts.presenter.MainPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -73,6 +74,11 @@ class MainActivity : BaseActivity(), MainContract.View {
         presenter = MainPresenter(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter?.onViewCreated()
+    }
+
     override fun getToolbarInstance(): Toolbar? = toolbar
 
     override fun showLoading() {
@@ -87,6 +93,10 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun showInfoMessage(msg: String) {
         toast(msg)
+    }
+
+    override fun publishDataList(data: List<JokeModel.Joke>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDestroy() {

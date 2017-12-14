@@ -20,33 +20,16 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.interactor
 
-import com.raywenderlich.chuckyfacts.entity.JokeModel
+import com.raywenderlich.chuckyfacts.MainContract
 
-interface MainContract {
-    interface View {
-        fun showLoading()
-        fun hideLoading()
-        fun publishDataList(data: List<JokeModel.Joke>)
-        fun showInfoMessage(msg: String)
+class MainInteractor(private var output: MainContract.InteractorOutput?) : MainContract.Interactor {
+    override fun loadJokesList() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    interface Presenter {
-        // User actions
-        fun listItemClicked(index: Int)
-        // Model updates
-        fun onViewCreated()
-        fun onDestroy()
-    }
-
-    interface Interactor {
-        fun loadJokesList()
-        fun unregister()
-    }
-
-    interface InteractorOutput {
-        fun onQuerySuccess(data: List<JokeModel.Joke>)
-        fun onQueryError()
+    override fun unregister() {
+        output = null
     }
 }

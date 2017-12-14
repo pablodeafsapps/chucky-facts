@@ -23,25 +23,34 @@
 package com.raywenderlich.chuckyfacts.presenter
 
 import com.raywenderlich.chuckyfacts.MainContract
+import com.raywenderlich.chuckyfacts.entity.JokeModel
+import com.raywenderlich.chuckyfacts.interactor.MainInteractor
 
-class MainPresenter(private var view: MainContract.View) : MainContract.Presenter, MainContract.InteractorOutput {
+class MainPresenter(private var view: MainContract.View?) : MainContract.Presenter, MainContract.InteractorOutput {
+
+    private var interactor: MainContract.Interactor? = MainInteractor(this)
+
     override fun listItemClicked(index: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onViewCreated() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        view?.showLoading()
+        interactor?.loadJokesList()
     }
 
-    override fun onDestroy() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onQuerySuccess() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onQuerySuccess(data: List<JokeModel.Joke>) {
+        view?.hideLoading()
+        view?.publishDataList(data)
     }
 
     override fun onQueryError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        view?.hideLoading()
+        view?.showInfoMessage("Error when loading data")
+    }
+
+    override fun onDestroy() {
+        view = null
+        interactor?.unregister()
+        interactor = null
     }
 }
