@@ -24,6 +24,7 @@ package com.raywenderlich.chuckyfacts.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
@@ -34,8 +35,9 @@ import com.raywenderlich.chuckyfacts.MainContract
 import com.raywenderlich.chuckyfacts.R
 import com.raywenderlich.chuckyfacts.entity.JokeModel
 import com.raywenderlich.chuckyfacts.presenter.MainPresenter
-import kotlinx.android.synthetic.main.activity_main.*
+import com.raywenderlich.chuckyfacts.view.adapters.JokesListAdapter
 
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_view_custom_layout.*
 
 import org.jetbrains.anko.toast
@@ -71,6 +73,8 @@ class MainActivity : BaseActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = JokesListAdapter(this, null)
         presenter = MainPresenter(this)
     }
 

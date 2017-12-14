@@ -26,7 +26,6 @@ import com.raywenderlich.chuckyfacts.MainContract
 
 class MainInteractor(private var output: MainContract.InteractorOutput?) : MainContract.Interactor {
     override fun loadJokesList() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun unregister() {

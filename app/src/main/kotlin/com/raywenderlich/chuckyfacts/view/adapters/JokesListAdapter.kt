@@ -23,55 +23,39 @@
 package com.raywenderlich.chuckyfacts.view.adapters
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.TextView
 
 import com.raywenderlich.chuckyfacts.R
 import com.raywenderlich.chuckyfacts.entity.JokeModel
 
-import org.jetbrains.anko.find
+import kotlinx.android.synthetic.main.activity_detail.view.*
 
-class JokesListAdapter(private val ctx: Context, private val resource: Int, private var dataList: List<JokeModel.Joke>) : BaseAdapter() {
+class JokesListAdapter(private val ctx: Context, private var dataList: List<JokeModel.Joke>?) : RecyclerView.Adapter<JokesListAdapter.ViewHolder>() {
+
+    override fun getItemCount() = dataList?.size ?: 0
 
     // Creating card_view_custom_layout ViewHolder to speed up the performance
-    private class ViewHolder {
-        var tvTitle: TextView? = null
-        var tvJoke: TextView? = null
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvId: TextView? = itemView.tv_joke_id_activity_detail
+        val tvJoke: TextView? = itemView.tv_joke_activity_detail
     }
 
-    override fun getView(position: Int, view: View?, parent: ViewGroup?): View? {
-        var convertView = view
-
-        val viewHolder: ViewHolder
-        if (convertView == null) {
-            convertView = LayoutInflater.from(ctx).inflate(resource, null)
-
-            // Configure card_view_custom_layout 'ViewHolder'
-            viewHolder = ViewHolder()
-            viewHolder.tvTitle = convertView.find(R.id.tv_title_card_view_custom_layout)
-            viewHolder.tvJoke = convertView.find(R.id.tv_joke_card_view_custom_layout)
-            convertView.tag = viewHolder
-        } else {
-            viewHolder = convertView.tag as ViewHolder
-        }
-
-        // 'viewHolder' can be now populated
-        viewHolder.tvTitle?.text = dataList[position].id.toString()
-        viewHolder.tvJoke?.text = dataList[position].text
-
-        return convertView
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
+        // create a new view
+        val viewRow = LayoutInflater.from(parent?.context).inflate(R.layout.card_view_custom_layout, parent, false)
+        return ViewHolder(viewRow)
     }
 
-    override fun getItem(position: Int) = dataList[position]
+    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+        holder?.tvId?.text = dataList?.let { it[position].id.toString() }
+        holder?.tvJoke?.text = dataList?.let { it[position].text }
+    }
 
-    override fun getItemId(position: Int) = position.toLong()
-
-    override fun getCount(): Int = dataList.size
-
-    fun getDataList(): List<JokeModel.Joke> = dataList
+    fun getDataList(): List<JokeModel.Joke>? = dataList
 
     fun updateData(list: List<JokeModel.Joke>) {
         this.dataList = list
