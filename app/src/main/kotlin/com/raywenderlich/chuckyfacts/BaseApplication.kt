@@ -20,23 +20,17 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts.view.activities
+package com.raywenderlich.chuckyfacts
 
-import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import android.app.Application
 
-import com.raywenderlich.chuckyfacts.R
+class BaseApplication : Application() {
 
-import kotlinx.android.synthetic.main.toolbar_view_custom_layout.*
-
-class MainActivity : BaseActivity() {
-
-    private val toolbar: Toolbar by lazy { toolbar_toolbar_view }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    companion object {
+        private val TAG = "BaseApplication"
     }
 
-    override fun getToolbarInstance(): Toolbar? = toolbar
+    override fun onCreate() {
+        super.onCreate()
+    }
 }

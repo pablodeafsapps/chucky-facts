@@ -23,14 +23,18 @@
 package com.raywenderlich.chuckyfacts.view.activities
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import com.raywenderlich.chuckyfacts.R
+import kotlinx.android.synthetic.main.toolbar_view_custom_layout.*
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity() {
+
+    private val toolbar: Toolbar by lazy { toolbar_toolbar_view }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
 
+    override fun getToolbarInstance(): android.support.v7.widget.Toolbar? = toolbar
 }
