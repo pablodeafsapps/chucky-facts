@@ -20,25 +20,28 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts.view.activities
+package com.raywenderlich.chuckyfacts.presenter
 
-import android.os.Bundle
-import android.support.v7.widget.Toolbar
-import com.raywenderlich.chuckyfacts.R
-import kotlinx.android.synthetic.main.toolbar_view_custom_layout.*
+import com.raywenderlich.chuckyfacts.MainContract
 
-class DetailActivity : BaseActivity() {
-
-    companion object {
-        val TAG = "DetailActivity"
+class MainPresenter(private var view: MainContract.View) : MainContract.Presenter, MainContract.InteractorOutput {
+    override fun listItemClicked(index: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private val toolbar: Toolbar by lazy { toolbar_toolbar_view }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun onViewCreated() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getToolbarInstance(): android.support.v7.widget.Toolbar? = toolbar
+    override fun onDestroy() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onQuerySuccess() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onQueryError() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

@@ -41,6 +41,8 @@ dependencies {
     implementation "com.android.support:design:$rootProject.ext.supportlibrary_version"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintlayout_version"
     implementation "com.android.support:cardview-v7:$rootProject.ext.supportlibrary_version"
+    // Including 3rd party libraries (Cicerone)
+    implementation "ru.terrakok.cicerone:cicerone:$rootProject.ext.cicerone_version"
     // Required -- JUnit 4 framework and Kotlin for testing
     testImplementation "junit:junit:$rootProject.ext.junit_version"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
