@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.view.activities
 
 import android.content.Intent
 import android.os.Bundle
