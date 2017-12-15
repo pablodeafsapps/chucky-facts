@@ -22,19 +22,19 @@
 
 package com.raywenderlich.chuckyfacts
 
-import com.raywenderlich.chuckyfacts.entity.JokeModel
+import com.raywenderlich.chuckyfacts.entity.Joke
 
 interface MainContract {
     interface View {
         fun showLoading()
         fun hideLoading()
-        fun publishDataList(data: List<JokeModel.Joke>)
+        fun publishDataList(data: List<Joke>)
         fun showInfoMessage(msg: String)
     }
 
     interface Presenter {
         // User actions
-        fun listItemClicked(index: Int)
+        fun listItemClicked(joke: Joke?)
         // Model updates
         fun onViewCreated()
         fun onDestroy()
@@ -46,7 +46,7 @@ interface MainContract {
     }
 
     interface InteractorOutput {
-        fun onQuerySuccess(data: List<JokeModel.Joke>)
+        fun onQuerySuccess(data: List<Joke>)
         fun onQueryError()
     }
 }

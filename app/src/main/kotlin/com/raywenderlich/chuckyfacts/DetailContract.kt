@@ -22,8 +22,11 @@
 
 package com.raywenderlich.chuckyfacts
 
+import com.raywenderlich.chuckyfacts.entity.Joke
+
 interface DetailContract {
     interface View {
+        fun showJokeData(id: String, joke: String)
         fun showInfoMessage(msg: String)
     }
 
@@ -31,7 +34,7 @@ interface DetailContract {
         // User actions
         fun backButtonClicked()
         // Model updates
-        fun onViewCreated()
+        fun onViewCreated(joke: Joke)
         fun onDestroy()
     }
 
