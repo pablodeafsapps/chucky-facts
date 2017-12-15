@@ -25,22 +25,21 @@ package com.raywenderlich.chuckyfacts.entity
 import android.os.Parcel
 import android.os.Parcelable
 
-object JokeModel {
-    data class Result(val joke: Joke)
-    data class Joke(val id: Int, val text: String) : Parcelable {
-        constructor(parcel: Parcel) : this(parcel.readInt(), parcel.readString())
+import com.google.gson.annotations.SerializedName
 
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeInt(id)
-            parcel.writeString(text)
-        }
+data class Joke(val id: Int, @SerializedName("joke") val text: String) : Parcelable {
+    constructor(parcel: Parcel) : this(parcel.readInt(), parcel.readString())
 
-        override fun describeContents(): Int = 0
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(text)
+    }
 
-        companion object CREATOR : Parcelable.Creator<Joke> {
-            override fun createFromParcel(parcel: Parcel): Joke = Joke(parcel)
+    override fun describeContents(): Int = 0
 
-            override fun newArray(size: Int): Array<Joke?> = arrayOfNulls(size)
-        }
+    companion object CREATOR : Parcelable.Creator<Joke> {
+        override fun createFromParcel(parcel: Parcel): Joke = Joke(parcel)
+
+        override fun newArray(size: Int): Array<Joke?> = arrayOfNulls(size)
     }
 }

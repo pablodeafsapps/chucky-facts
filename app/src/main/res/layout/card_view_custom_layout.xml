@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_title_card_view_custom_layout"
+            android:id="@+id/tv_id_card_view_custom_layout"
             android:layout_width="@dimen/dimen_fully_stretchable"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/standard_margin"
@@ -39,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_card_view_custom_layout"
+            app:layout_constraintTop_toBottomOf="@id/tv_id_card_view_custom_layout"
             tools:text="hello world snippet" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
