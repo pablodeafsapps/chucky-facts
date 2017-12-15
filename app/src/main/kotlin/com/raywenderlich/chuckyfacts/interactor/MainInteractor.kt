@@ -22,10 +22,38 @@
 
 package com.raywenderlich.chuckyfacts.interactor
 
+import com.github.kittinunf.fuel.android.extension.responseJson
+import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.result.Result
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
 import com.raywenderlich.chuckyfacts.MainContract
+import com.raywenderlich.chuckyfacts.entity.Joke
 
 class MainInteractor(private var output: MainContract.InteractorOutput?) : MainContract.Interactor {
+
+    companion object {
+        val icndbUrl = "https://api.icndb.com/jokes"
+    }
+
     override fun loadJokesList() {
+        icndbUrl.httpPost().responseJson { request, response, result ->
+            when (result) {
+                is Result.Failure -> {
+                    output?.onQueryError()
+                }
+                is Result.Success -> {
+                    val jokesJsonObject = result.get().obj()
+
+                    val type = object : TypeToken<List<Joke>>() {}.type
+                    val jokesList: List<Joke> =
+                            Gson().fromJson(jokesJsonObject.getJSONArray("value").toString(), type)
+
+                    output?.onQuerySuccess(jokesList)
+                }
+            }
+        }
     }
 
     override fun unregister() {
