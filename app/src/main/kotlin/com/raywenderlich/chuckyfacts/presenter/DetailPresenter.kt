@@ -23,39 +23,24 @@
 package com.raywenderlich.chuckyfacts.presenter
 
 import com.raywenderlich.chuckyfacts.BaseApplication
-import com.raywenderlich.chuckyfacts.MainContract
+import com.raywenderlich.chuckyfacts.DetailContract
 import com.raywenderlich.chuckyfacts.entity.Joke
-import com.raywenderlich.chuckyfacts.interactor.MainInteractor
-import com.raywenderlich.chuckyfacts.view.activities.DetailActivity
+
 import ru.terrakok.cicerone.Router
 
-class MainPresenter(private var view: MainContract.View?) : MainContract.Presenter, MainContract.InteractorOutput {
+class DetailPresenter(private var view: DetailContract.View?) : DetailContract.Presenter {
 
-    private var interactor: MainContract.Interactor? = MainInteractor(this)
     private val router: Router? by lazy { BaseApplication.INSTANCE.cicerone.router }
 
-    override fun listItemClicked(joke: Joke?) {
-        router?.navigateTo(DetailActivity.TAG, joke)
+    override fun backButtonClicked() {
+        router?.exit()
     }
 
-    override fun onViewCreated() {
-        view?.showLoading()
-        interactor?.loadJokesList()
-    }
-
-    override fun onQuerySuccess(data: List<Joke>) {
-        view?.hideLoading()
-        view?.publishDataList(data)
-    }
-
-    override fun onQueryError() {
-        view?.hideLoading()
-        view?.showInfoMessage("Error when loading data")
+    override fun onViewCreated(joke: Joke) {
+        view?.showJokeData(joke.id.toString(), joke.text)
     }
 
     override fun onDestroy() {
         view = null
-        interactor?.unregister()
-        interactor = null
     }
 }
