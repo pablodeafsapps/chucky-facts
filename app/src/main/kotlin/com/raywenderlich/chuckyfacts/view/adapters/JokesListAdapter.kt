@@ -22,27 +22,27 @@
 
 package com.raywenderlich.chuckyfacts.view.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
 import com.raywenderlich.chuckyfacts.R
-import com.raywenderlich.chuckyfacts.entity.JokeModel
+import com.raywenderlich.chuckyfacts.entity.Joke
 
-import kotlinx.android.synthetic.main.activity_detail.view.*
+import kotlinx.android.synthetic.main.card_view_custom_layout.view.*
 
-class JokesListAdapter(private val ctx: Context, private var dataList: List<JokeModel.Joke>?) : RecyclerView.Adapter<JokesListAdapter.ViewHolder>() {
-
-    override fun getItemCount() = dataList?.size ?: 0
+class JokesListAdapter(private var listener: (Joke?) -> Unit, private var dataList: List<Joke>?) : RecyclerView.Adapter<JokesListAdapter.ViewHolder>() {
 
     // Creating card_view_custom_layout ViewHolder to speed up the performance
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvId: TextView? = itemView.tv_joke_id_activity_detail
-        val tvJoke: TextView? = itemView.tv_joke_activity_detail
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvId: TextView? = itemView.tv_id_card_view_custom_layout
+        val tvJoke: TextView? = itemView.tv_joke_card_view_custom_layout
     }
+
+    override fun getItemCount() = dataList?.size ?: 0
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         // create a new view
@@ -52,12 +52,11 @@ class JokesListAdapter(private val ctx: Context, private var dataList: List<Joke
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         holder?.tvId?.text = dataList?.let { it[position].id.toString() }
-        holder?.tvJoke?.text = dataList?.let { it[position].text }
+        holder?.tvJoke?.text = dataList?.let { Html.fromHtml(it[position].text) }
+        holder?.itemView?.setOnClickListener { listener(dataList?.get(position)) }
     }
 
-    fun getDataList(): List<JokeModel.Joke>? = dataList
-
-    fun updateData(list: List<JokeModel.Joke>) {
+    fun updateData(list: List<Joke>) {
         this.dataList = list
         this.notifyDataSetChanged()
     }

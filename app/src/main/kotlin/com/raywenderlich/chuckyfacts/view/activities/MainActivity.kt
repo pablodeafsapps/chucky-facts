@@ -24,16 +24,18 @@ package com.raywenderlich.chuckyfacts.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import com.raywenderlich.chuckyfacts.BaseApplication
 
 import com.raywenderlich.chuckyfacts.MainContract
 import com.raywenderlich.chuckyfacts.R
-import com.raywenderlich.chuckyfacts.entity.JokeModel
+import com.raywenderlich.chuckyfacts.entity.Joke
 import com.raywenderlich.chuckyfacts.presenter.MainPresenter
 import com.raywenderlich.chuckyfacts.view.adapters.JokesListAdapter
 
@@ -57,8 +59,11 @@ class MainActivity : BaseActivity(), MainContract.View {
             }
 
             private fun forward(command: Forward) {
+                val data = (command.transitionData as Joke)
+
                 when (command.screenKey) {
-                    DetailActivity.TAG -> startActivity(Intent(this@MainActivity, DetailActivity::class.java))
+                    DetailActivity.TAG -> startActivity(Intent(this@MainActivity, DetailActivity::class.java)
+                            .putExtra("data", data as Parcelable))
                     else -> Log.e("Cicerone", "Unknown screen: " + command.screenKey)
                 }
             }
@@ -73,14 +78,15 @@ class MainActivity : BaseActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = JokesListAdapter(this, null)
         presenter = MainPresenter(this)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = JokesListAdapter({ joke -> presenter?.listItemClicked(joke) }, null)
     }
 
     override fun onResume() {
         super.onResume()
         presenter?.onViewCreated()
+        BaseApplication.INSTANCE.cicerone.navigatorHolder.setNavigator(navigator)
     }
 
     override fun getToolbarInstance(): Toolbar? = toolbar
@@ -99,8 +105,8 @@ class MainActivity : BaseActivity(), MainContract.View {
         toast(msg)
     }
 
-    override fun publishDataList(data: List<JokeModel.Joke>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun publishDataList(data: List<Joke>) {
+        (recyclerView.adapter as JokesListAdapter).updateData(data)
     }
 
     override fun onDestroy() {
