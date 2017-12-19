@@ -20,43 +20,31 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts.presenter
+package com.raywenderlich.chuckyfacts.di
+
+import android.app.Application
 
 import com.raywenderlich.chuckyfacts.BaseApplication
-import com.raywenderlich.chuckyfacts.MainContract
-import com.raywenderlich.chuckyfacts.entity.Joke
-import com.raywenderlich.chuckyfacts.interactor.MainInteractor
-import com.raywenderlich.chuckyfacts.view.activities.DetailActivity
 
-import ru.terrakok.cicerone.Router
+import dagger.BindsInstance
+import dagger.Component
+import dagger.android.AndroidInjectionModule
 
-class MainPresenter(private var view: MainContract.View?) : MainContract.Presenter, MainContract.InteractorOutput {
+@Component(modules = arrayOf(
+        AndroidInjectionModule::class,
+        AppModule::class,
+        MainModule::class,
+        ActivityBuilderModule::class))
+interface AppComponent {
 
-    private var interactor: MainContract.Interactor? = MainInteractor(this)
-    private val router: Router? by lazy { BaseApplication.INSTANCE.cicerone.router }
+    fun inject(app: BaseApplication)
 
-    override fun listItemClicked(joke: Joke?) {
-        router?.navigateTo(DetailActivity.TAG, joke)
-    }
+    @Component.Builder
+    interface Builder {
 
-    override fun onViewCreated() {
-        view?.showLoading()
-        interactor?.loadJokesList()
-    }
+        @BindsInstance
+        fun application(application: Application): AppComponent.Builder
 
-    override fun onQuerySuccess(data: List<Joke>) {
-        view?.hideLoading()
-        view?.publishDataList(data)
-    }
-
-    override fun onQueryError() {
-        view?.hideLoading()
-        view?.showInfoMessage("Error when loading data")
-    }
-
-    override fun onDestroy() {
-        view = null
-        interactor?.unregister()
-        interactor = null
+        fun build(): AppComponent
     }
 }

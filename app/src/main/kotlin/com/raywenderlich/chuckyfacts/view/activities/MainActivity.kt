@@ -36,8 +36,8 @@ import com.raywenderlich.chuckyfacts.BaseApplication
 import com.raywenderlich.chuckyfacts.MainContract
 import com.raywenderlich.chuckyfacts.R
 import com.raywenderlich.chuckyfacts.entity.Joke
-import com.raywenderlich.chuckyfacts.presenter.MainPresenter
 import com.raywenderlich.chuckyfacts.view.adapters.JokesListAdapter
+import dagger.android.AndroidInjection
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_view_custom_layout.*
@@ -47,6 +47,8 @@ import org.jetbrains.anko.toast
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
+
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainContract.View {
 
@@ -69,23 +71,24 @@ class MainActivity : BaseActivity(), MainContract.View {
             }
         }
     }
-    private var presenter: MainContract.Presenter? = null
+    @Inject
+    lateinit var presenter: MainContract.Presenter
     private val toolbar: Toolbar by lazy { toolbar_toolbar_view }
     private val recyclerView: RecyclerView by lazy { rv_jokes_list_activity_main }
     private val progressBar: ProgressBar by lazy { prog_bar_loading_jokes_activity_main }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter = MainPresenter(this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = JokesListAdapter({ joke -> presenter?.listItemClicked(joke) }, null)
+        recyclerView.adapter = JokesListAdapter({ joke -> presenter.listItemClicked(joke) }, null)
     }
 
     override fun onResume() {
         super.onResume()
-        presenter?.onViewCreated()
+        presenter.onViewCreated()
         BaseApplication.INSTANCE.cicerone.navigatorHolder.setNavigator(navigator)
     }
 
@@ -110,8 +113,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun onDestroy() {
-        presenter?.onDestroy()
-        presenter = null
+        presenter.onDestroy()
         super.onDestroy()
     }
 }

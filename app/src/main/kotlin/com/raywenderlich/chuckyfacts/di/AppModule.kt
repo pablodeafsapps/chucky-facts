@@ -20,49 +20,20 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.di
 
-import android.app.Activity
 import android.app.Application
+import android.content.Context
 
-import com.raywenderlich.chuckyfacts.di.DaggerAppComponent
+import dagger.Module
+import dagger.Provides
 
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import javax.inject.Singleton
 
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.Router
-
-import javax.inject.Inject
-
-class BaseApplication : Application(), HasActivityInjector {
-
-    companion object {
-        private val TAG = "BaseApplication"
-        lateinit var INSTANCE: BaseApplication
-    }
-
-    @Inject
-    lateinit var activityInjector : DispatchingAndroidInjector<Activity>
-    // Routing layer (VIPER)
-    lateinit var cicerone: Cicerone<Router>
-
-    init {
-        INSTANCE = this
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-
-        INSTANCE = this
-        DaggerAppComponent.builder().application(this).build().inject(this)
-        this.initCicerone()
-    }
-
-    private fun BaseApplication.initCicerone() {
-        this.cicerone = Cicerone.create()
-    }
-
-    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+@Module
+class AppModule {
+    // same as provides but this returns injected parameter
+    @Provides
+    @Singleton
+    fun bindContext(application: Application): Context = application
 }
