@@ -37,10 +37,4 @@ interface DetailContract {
         fun onViewCreated(joke: Joke)
         fun onDestroy()
     }
-
-    interface Interactor {
-    }
-
-    interface InteractorOutput {
-    }
 }

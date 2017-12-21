@@ -22,32 +22,24 @@
 
 package com.raywenderlich.chuckyfacts.di
 
-import android.app.Application
-
-import com.raywenderlich.chuckyfacts.BaseApplication
 import com.raywenderlich.chuckyfacts.MainContract
+import com.raywenderlich.chuckyfacts.interactor.MainInteractor
+import com.raywenderlich.chuckyfacts.presenter.MainPresenter
+import com.raywenderlich.chuckyfacts.view.activities.MainActivity
 
-import dagger.BindsInstance
-import dagger.Component
-import dagger.android.AndroidInjectionModule
+import dagger.Binds
+import dagger.Module
 
-@Component(modules = arrayOf(
-        AndroidInjectionModule::class,
-        AppModule::class,
-        MainModule::class,
-        MainAbstractModule::class,
-        ActivityBuilderModule::class))
-interface AppComponent {
+@Module
+abstract class MainAbstractModule {
+    // "@Binds" substitute "@Provides"
+    // Inject interfaces (instead of the class) using the class object which implements it
+    @Binds
+    abstract fun bindMainView(mainActivity: MainActivity): MainContract.View
 
-    fun inject(app: BaseApplication)
-    fun inject(presenter: MainContract.Presenter)
+    @Binds
+    abstract fun bindMainPresenter(mainPresenter: MainPresenter): MainContract.Presenter
 
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        fun application(application: Application): AppComponent.Builder
-
-        fun build(): AppComponent
-    }
+    @Binds
+    abstract fun bindMainInteractor(mainInteractor: MainInteractor): MainContract.Interactor
 }

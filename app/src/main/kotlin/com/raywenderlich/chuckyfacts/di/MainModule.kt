@@ -22,19 +22,19 @@
 
 package com.raywenderlich.chuckyfacts.di
 
-import com.raywenderlich.chuckyfacts.MainContract
-import com.raywenderlich.chuckyfacts.presenter.MainPresenter
-import com.raywenderlich.chuckyfacts.view.activities.MainActivity
-
 import dagger.Module
 import dagger.Provides
+
+import javax.inject.Named
 
 @Module
 class MainModule {
     @Provides
-    internal fun provideMainView(mainActivity: MainActivity): MainContract.View = mainActivity
+    @Named("name")
+    fun provideName(): String = "Pablo Luis"
+
 
     @Provides
-    internal fun provideMainPresenter(mainView: MainContract.View): MainContract.Presenter =
-            MainPresenter(mainView)
+    @Named("lastname")
+    fun provideLastname(): String = "Sordo Martinez"
 }

@@ -20,34 +20,9 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts.di
+package com.raywenderlich.chuckyfacts.entity
 
-import android.app.Application
+import javax.inject.Named
 
-import com.raywenderlich.chuckyfacts.BaseApplication
-import com.raywenderlich.chuckyfacts.MainContract
-
-import dagger.BindsInstance
-import dagger.Component
-import dagger.android.AndroidInjectionModule
-
-@Component(modules = arrayOf(
-        AndroidInjectionModule::class,
-        AppModule::class,
-        MainModule::class,
-        MainAbstractModule::class,
-        ActivityBuilderModule::class))
-interface AppComponent {
-
-    fun inject(app: BaseApplication)
-    fun inject(presenter: MainContract.Presenter)
-
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        fun application(application: Application): AppComponent.Builder
-
-        fun build(): AppComponent
-    }
-}
+//data class DummyItem @Inject constructor(@Named("name") private var name: String, @Named("lastname") private var lastname: String)
+data class DummyItem(@Named("name") private var name: String, @Named("lastname") private var lastname: String)

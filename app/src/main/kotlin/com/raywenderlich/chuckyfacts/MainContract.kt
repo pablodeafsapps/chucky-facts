@@ -42,7 +42,7 @@ interface MainContract {
 
     interface Interactor {
         fun loadJokesList()
-        fun unregister()
+        fun setOutputEntity(interactorOutput: MainContract.InteractorOutput)
     }
 
     interface InteractorOutput {

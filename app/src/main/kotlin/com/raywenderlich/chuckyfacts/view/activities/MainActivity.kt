@@ -31,12 +31,13 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import com.raywenderlich.chuckyfacts.BaseApplication
 
+import com.raywenderlich.chuckyfacts.BaseApplication
 import com.raywenderlich.chuckyfacts.MainContract
 import com.raywenderlich.chuckyfacts.R
 import com.raywenderlich.chuckyfacts.entity.Joke
 import com.raywenderlich.chuckyfacts.view.adapters.JokesListAdapter
+
 import dagger.android.AndroidInjection
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -71,6 +72,8 @@ class MainActivity : BaseActivity(), MainContract.View {
             }
         }
     }
+//    @Inject
+//    lateinit var dummyItem: DummyItem
     @Inject
     lateinit var presenter: MainContract.Presenter
     private val toolbar: Toolbar by lazy { toolbar_toolbar_view }
