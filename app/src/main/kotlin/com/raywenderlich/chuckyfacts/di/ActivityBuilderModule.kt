@@ -20,21 +20,19 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.di
 
-import com.raywenderlich.chuckyfacts.entity.Joke
+import com.raywenderlich.chuckyfacts.view.activities.MainActivity
+import com.raywenderlich.chuckyfacts.view.activities.SplashActivity
 
-interface DetailContract {
-    interface View {
-        fun showJokeData(id: String, joke: String)
-        fun showInfoMessage(msg: String)
-    }
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
-    interface Presenter {
-        // User actions
-        fun backButtonClicked()
-        // Model updates
-        fun onViewCreated(joke: Joke)
-        fun onDestroy()
-    }
+@Module
+abstract class ActivityBuilderModule {
+    @ContributesAndroidInjector(modules = arrayOf(MainAbstractModule::class))
+    internal abstract fun bindMainActivity(): MainActivity
+
+    @ContributesAndroidInjector(modules = arrayOf(SplashAbstractModule::class))
+    internal abstract fun bindSplashActivity(): SplashActivity
 }

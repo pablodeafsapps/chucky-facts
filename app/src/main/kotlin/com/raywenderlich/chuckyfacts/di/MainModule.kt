@@ -20,21 +20,21 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.di
 
-import com.raywenderlich.chuckyfacts.entity.Joke
+import dagger.Module
+import dagger.Provides
 
-interface DetailContract {
-    interface View {
-        fun showJokeData(id: String, joke: String)
-        fun showInfoMessage(msg: String)
-    }
+import javax.inject.Named
 
-    interface Presenter {
-        // User actions
-        fun backButtonClicked()
-        // Model updates
-        fun onViewCreated(joke: Joke)
-        fun onDestroy()
-    }
+@Module
+class MainModule {
+    @Provides
+    @Named("name")
+    fun provideName(): String = "Pablo Luis"
+
+
+    @Provides
+    @Named("lastname")
+    fun provideLastname(): String = "Sordo Martinez"
 }

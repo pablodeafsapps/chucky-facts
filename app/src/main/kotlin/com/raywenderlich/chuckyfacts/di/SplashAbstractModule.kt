@@ -20,21 +20,20 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.di
 
-import com.raywenderlich.chuckyfacts.entity.Joke
+import com.raywenderlich.chuckyfacts.SplashContract
+import com.raywenderlich.chuckyfacts.presenter.SplashPresenter
+import com.raywenderlich.chuckyfacts.view.activities.SplashActivity
 
-interface DetailContract {
-    interface View {
-        fun showJokeData(id: String, joke: String)
-        fun showInfoMessage(msg: String)
-    }
+import dagger.Binds
+import dagger.Module
 
-    interface Presenter {
-        // User actions
-        fun backButtonClicked()
-        // Model updates
-        fun onViewCreated(joke: Joke)
-        fun onDestroy()
-    }
+@Module
+abstract class SplashAbstractModule {
+    @Binds
+    abstract fun bindSplashView(splashActivity: SplashActivity): SplashContract.View
+
+    @Binds
+    abstract fun bindSplashPresenter(splashPresenter: SplashPresenter): SplashContract.Presenter
 }
