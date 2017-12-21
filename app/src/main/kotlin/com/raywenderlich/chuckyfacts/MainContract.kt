@@ -37,12 +37,11 @@ interface MainContract {
         fun listItemClicked(joke: Joke?)
         // Model updates
         fun onViewCreated()
-        fun onDestroy()
     }
 
     interface Interactor {
         fun loadJokesList()
-        fun unregister()
+        fun setOutputEntity(interactorOutput: MainContract.InteractorOutput)
     }
 
     interface InteractorOutput {

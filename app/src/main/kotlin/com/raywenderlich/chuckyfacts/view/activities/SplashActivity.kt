@@ -25,13 +25,53 @@ package com.raywenderlich.chuckyfacts.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 
-class SplashActivity : AppCompatActivity() {
+import com.raywenderlich.chuckyfacts.BaseApplication
+import com.raywenderlich.chuckyfacts.SplashContract
+
+import dagger.android.AndroidInjection
+
+import ru.terrakok.cicerone.Navigator
+import ru.terrakok.cicerone.commands.Command
+import ru.terrakok.cicerone.commands.Forward
+
+import javax.inject.Inject
+
+class SplashActivity : AppCompatActivity(), SplashContract.View {
+
+    @Inject
+    lateinit var presenter: SplashContract.Presenter
+
+    private val navigator: Navigator? by lazy {
+        object : Navigator {
+            override fun applyCommand(command: Command) {
+                if (command is Forward) {
+                    forward(command)
+                }
+            }
+
+            private fun forward(command: Forward) {
+                when (command.screenKey) {
+                    MainActivity.TAG -> startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    else -> Log.e("Cicerone", "Unknown screen: " + command.screenKey)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        // Start 'MainActivity'
-        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onViewCreated()
+        BaseApplication.INSTANCE.cicerone.navigatorHolder.setNavigator(navigator)
+    }
+
+    override fun finishView() {
         // close splash activity
         finish()
     }

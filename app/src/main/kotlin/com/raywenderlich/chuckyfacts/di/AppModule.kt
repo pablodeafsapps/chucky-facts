@@ -20,21 +20,20 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.di
 
-import com.raywenderlich.chuckyfacts.entity.Joke
+import android.app.Application
+import android.content.Context
 
-interface DetailContract {
-    interface View {
-        fun showJokeData(id: String, joke: String)
-        fun showInfoMessage(msg: String)
-    }
+import dagger.Module
+import dagger.Provides
 
-    interface Presenter {
-        // User actions
-        fun backButtonClicked()
-        // Model updates
-        fun onViewCreated(joke: Joke)
-        fun onDestroy()
-    }
+import javax.inject.Singleton
+
+@Module
+class AppModule {
+    // same as provides but this returns injected parameter
+    @Provides
+    @Singleton
+    fun bindContext(application: Application): Context = application
 }

@@ -20,21 +20,9 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.entity
 
-import com.raywenderlich.chuckyfacts.entity.Joke
+import javax.inject.Named
 
-interface DetailContract {
-    interface View {
-        fun showJokeData(id: String, joke: String)
-        fun showInfoMessage(msg: String)
-    }
-
-    interface Presenter {
-        // User actions
-        fun backButtonClicked()
-        // Model updates
-        fun onViewCreated(joke: Joke)
-        fun onDestroy()
-    }
-}
+//data class DummyItem @Inject constructor(@Named("name") private var name: String, @Named("lastname") private var lastname: String)
+data class DummyItem(@Named("name") private var name: String, @Named("lastname") private var lastname: String)

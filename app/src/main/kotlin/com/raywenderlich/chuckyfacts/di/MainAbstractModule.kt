@@ -20,21 +20,26 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.di
 
-import com.raywenderlich.chuckyfacts.entity.Joke
+import com.raywenderlich.chuckyfacts.MainContract
+import com.raywenderlich.chuckyfacts.interactor.MainInteractor
+import com.raywenderlich.chuckyfacts.presenter.MainPresenter
+import com.raywenderlich.chuckyfacts.view.activities.MainActivity
 
-interface DetailContract {
-    interface View {
-        fun showJokeData(id: String, joke: String)
-        fun showInfoMessage(msg: String)
-    }
+import dagger.Binds
+import dagger.Module
 
-    interface Presenter {
-        // User actions
-        fun backButtonClicked()
-        // Model updates
-        fun onViewCreated(joke: Joke)
-        fun onDestroy()
-    }
+@Module
+abstract class MainAbstractModule {
+    // "@Binds" substitute "@Provides"
+    // Inject interfaces (instead of the class) using the class object which implements it
+    @Binds
+    abstract fun bindMainView(mainActivity: MainActivity): MainContract.View
+
+    @Binds
+    abstract fun bindMainPresenter(mainPresenter: MainPresenter): MainContract.Presenter
+
+    @Binds
+    abstract fun bindMainInteractor(mainInteractor: MainInteractor): MainContract.Interactor
 }

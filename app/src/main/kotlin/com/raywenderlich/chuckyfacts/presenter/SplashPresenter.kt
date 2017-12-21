@@ -20,21 +20,20 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts
+package com.raywenderlich.chuckyfacts.presenter
 
-import com.raywenderlich.chuckyfacts.entity.Joke
+import com.raywenderlich.chuckyfacts.BaseApplication
+import com.raywenderlich.chuckyfacts.SplashContract
+import com.raywenderlich.chuckyfacts.view.activities.MainActivity
+import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
-interface DetailContract {
-    interface View {
-        fun showJokeData(id: String, joke: String)
-        fun showInfoMessage(msg: String)
-    }
+class SplashPresenter @Inject constructor(private var view: SplashContract.View?) : SplashContract.Presenter {
 
-    interface Presenter {
-        // User actions
-        fun backButtonClicked()
-        // Model updates
-        fun onViewCreated(joke: Joke)
-        fun onDestroy()
+    private val router: Router? by lazy { BaseApplication.INSTANCE.cicerone.router }
+
+    override fun onViewCreated() {
+        router?.navigateTo(MainActivity.TAG)
+        view?.finishView()
     }
 }

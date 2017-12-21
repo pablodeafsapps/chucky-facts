@@ -24,15 +24,25 @@ package com.raywenderlich.chuckyfacts.presenter
 
 import com.raywenderlich.chuckyfacts.BaseApplication
 import com.raywenderlich.chuckyfacts.MainContract
+import com.raywenderlich.chuckyfacts.di.DaggerAppComponent
 import com.raywenderlich.chuckyfacts.entity.Joke
-import com.raywenderlich.chuckyfacts.interactor.MainInteractor
 import com.raywenderlich.chuckyfacts.view.activities.DetailActivity
+
 import ru.terrakok.cicerone.Router
 
-class MainPresenter(private var view: MainContract.View?) : MainContract.Presenter, MainContract.InteractorOutput {
+import javax.inject.Inject
 
-    private var interactor: MainContract.Interactor? = MainInteractor(this)
+class MainPresenter @Inject constructor(private var view: MainContract.View?) : MainContract.Presenter, MainContract.InteractorOutput {
+
+    @Inject
+    lateinit var interactor: MainContract.Interactor
+//    @Inject
+//    lateinit var dummyItem: DummyItem
     private val router: Router? by lazy { BaseApplication.INSTANCE.cicerone.router }
+
+    init {
+        DaggerAppComponent.builder().application(BaseApplication.INSTANCE).build().inject(this)
+    }
 
     override fun listItemClicked(joke: Joke?) {
         router?.navigateTo(DetailActivity.TAG, joke)
@@ -40,7 +50,8 @@ class MainPresenter(private var view: MainContract.View?) : MainContract.Present
 
     override fun onViewCreated() {
         view?.showLoading()
-        interactor?.loadJokesList()
+        interactor.setOutputEntity(this)
+        interactor.loadJokesList()
     }
 
     override fun onQuerySuccess(data: List<Joke>) {
@@ -51,11 +62,5 @@ class MainPresenter(private var view: MainContract.View?) : MainContract.Present
     override fun onQueryError() {
         view?.hideLoading()
         view?.showInfoMessage("Error when loading data")
-    }
-
-    override fun onDestroy() {
-        view = null
-        interactor?.unregister()
-        interactor = null
     }
 }
