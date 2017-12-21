@@ -53,6 +53,10 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainContract.View {
 
+    companion object {
+        val TAG = "MainActivity"
+    }
+
     private val navigator: Navigator? by lazy {
         object : Navigator {
             override fun applyCommand(command: Command) {
@@ -72,7 +76,7 @@ class MainActivity : BaseActivity(), MainContract.View {
             }
         }
     }
-//    @Inject
+    //    @Inject
 //    lateinit var dummyItem: DummyItem
     @Inject
     lateinit var presenter: MainContract.Presenter
@@ -113,10 +117,5 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun publishDataList(data: List<Joke>) {
         (recyclerView.adapter as JokesListAdapter).updateData(data)
-    }
-
-    override fun onDestroy() {
-        presenter.onDestroy()
-        super.onDestroy()
     }
 }

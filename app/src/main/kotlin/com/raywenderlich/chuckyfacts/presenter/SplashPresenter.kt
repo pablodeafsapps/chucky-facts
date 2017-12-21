@@ -20,19 +20,20 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.chuckyfacts.di
+package com.raywenderlich.chuckyfacts.presenter
 
+import com.raywenderlich.chuckyfacts.BaseApplication
+import com.raywenderlich.chuckyfacts.SplashContract
 import com.raywenderlich.chuckyfacts.view.activities.MainActivity
-import com.raywenderlich.chuckyfacts.view.activities.SplashActivity
+import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
-import dagger.Module
-import dagger.android.ContributesAndroidInjector
+class SplashPresenter @Inject constructor(private var view: SplashContract.View?) : SplashContract.Presenter {
 
-@Module
-abstract class ActivityBuilderModule {
-    @ContributesAndroidInjector(modules = arrayOf(MainAbstractModule::class))
-    internal abstract fun bindMainActivity(): MainActivity
+    private val router: Router? by lazy { BaseApplication.INSTANCE.cicerone.router }
 
-    @ContributesAndroidInjector(modules = arrayOf(SplashAbstractModule::class))
-    internal abstract fun bindSplashActivity(): SplashActivity
+    override fun onViewCreated() {
+        router?.navigateTo(MainActivity.TAG)
+        view?.finishView()
+    }
 }

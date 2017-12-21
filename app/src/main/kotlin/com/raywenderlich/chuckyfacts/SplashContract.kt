@@ -30,6 +30,5 @@ interface SplashContract {
     interface Presenter {
         // Model updates
         fun onViewCreated()
-        fun onDestroy()
     }
 }

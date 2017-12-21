@@ -63,8 +63,4 @@ class MainPresenter @Inject constructor(private var view: MainContract.View?) : 
         view?.hideLoading()
         view?.showInfoMessage("Error when loading data")
     }
-
-    override fun onDestroy() {
-        view = null
-    }
 }

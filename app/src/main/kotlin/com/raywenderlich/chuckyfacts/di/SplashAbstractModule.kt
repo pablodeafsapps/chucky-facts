@@ -22,17 +22,18 @@
 
 package com.raywenderlich.chuckyfacts.di
 
-import com.raywenderlich.chuckyfacts.view.activities.MainActivity
+import com.raywenderlich.chuckyfacts.SplashContract
+import com.raywenderlich.chuckyfacts.presenter.SplashPresenter
 import com.raywenderlich.chuckyfacts.view.activities.SplashActivity
 
+import dagger.Binds
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class ActivityBuilderModule {
-    @ContributesAndroidInjector(modules = arrayOf(MainAbstractModule::class))
-    internal abstract fun bindMainActivity(): MainActivity
+abstract class SplashAbstractModule {
+    @Binds
+    abstract fun bindSplashView(splashActivity: SplashActivity): SplashContract.View
 
-    @ContributesAndroidInjector(modules = arrayOf(SplashAbstractModule::class))
-    internal abstract fun bindSplashActivity(): SplashActivity
+    @Binds
+    abstract fun bindSplashPresenter(splashPresenter: SplashPresenter): SplashContract.Presenter
 }

@@ -37,7 +37,6 @@ interface MainContract {
         fun listItemClicked(joke: Joke?)
         // Model updates
         fun onViewCreated()
-        fun onDestroy()
     }
 
     interface Interactor {
