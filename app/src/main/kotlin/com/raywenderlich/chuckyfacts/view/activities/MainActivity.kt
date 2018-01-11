@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Razeware LLC
+ * Copyright (c) 2018 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,7 @@ import android.widget.ProgressBar
 import com.raywenderlich.chuckyfacts.BaseApplication
 import com.raywenderlich.chuckyfacts.MainContract
 import com.raywenderlich.chuckyfacts.R
+import com.raywenderlich.chuckyfacts.entity.DummyItem
 import com.raywenderlich.chuckyfacts.entity.Joke
 import com.raywenderlich.chuckyfacts.view.adapters.JokesListAdapter
 
@@ -76,7 +77,7 @@ class MainActivity : BaseActivity(), MainContract.View {
             }
         }
     }
-    //    @Inject
+//    @Inject
 //    lateinit var dummyItem: DummyItem
     @Inject
     lateinit var presenter: MainContract.Presenter
@@ -97,6 +98,7 @@ class MainActivity : BaseActivity(), MainContract.View {
         super.onResume()
         presenter.onViewCreated()
         BaseApplication.INSTANCE.cicerone.navigatorHolder.setNavigator(navigator)
+//        println("name: ${dummyItem.name}, lastname: ${dummyItem.lastname}")
     }
 
     override fun getToolbarInstance(): Toolbar? = toolbar
