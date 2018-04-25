@@ -6,11 +6,11 @@ buildscript {
         compilesdk_version = 26
         minsdk_version = 19
         targetsdk_version = 26
-        buildtools_version = '26.0.2'
+        buildtools_version = '27.0.3'
         supportlibrary_version = '27.0.2'
         constraintlayout_version = '1.0.2'
-        gradle_version = '3.0.1'
-        kotlin_version = '1.1.61'
+        gradle_version = '3.1.1'
+        kotlin_version = '1.2.31'
         anko_version = '0.10.1'
         junit_version = '4.12'
         espresso_version = '3.0.1'

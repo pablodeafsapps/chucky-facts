@@ -86,7 +86,7 @@ class DetailActivity : BaseActivity(), DetailContract.View {
         BaseApplication.INSTANCE.cicerone.navigatorHolder.setNavigator(navigator)
     }
 
-    override fun getToolbarInstance(): android.support.v7.widget.Toolbar? = toolbar
+    override fun getToolbarInstance(): Toolbar? = toolbar
 
     override fun showJokeData(id: String, joke: String) {
         tvId?.text = id
