@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Razeware LLC
+ * Copyright (c) 2018 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -86,7 +86,7 @@ class DetailActivity : BaseActivity(), DetailContract.View {
         BaseApplication.INSTANCE.cicerone.navigatorHolder.setNavigator(navigator)
     }
 
-    override fun getToolbarInstance(): android.support.v7.widget.Toolbar? = toolbar
+    override fun getToolbarInstance(): Toolbar? = toolbar
 
     override fun showJokeData(id: String, joke: String) {
         tvId?.text = id

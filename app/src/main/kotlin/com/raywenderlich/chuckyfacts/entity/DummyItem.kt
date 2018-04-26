@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Razeware LLC
+ * Copyright (c) 2018 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,15 @@
 
 package com.raywenderlich.chuckyfacts.entity
 
+import javax.inject.Inject
 import javax.inject.Named
 
-//data class DummyItem @Inject constructor(@Named("name") private var name: String, @Named("lastname") private var lastname: String)
-data class DummyItem(@Named("name") private var name: String, @Named("lastname") private var lastname: String)
+data class DummyItem @Inject constructor(@Named("name") private var name: String, @Named("lastname") private var lastname: String)
+//class DummyItem @Inject constructor() {
+//    @Inject
+//    @field:Named("name")
+//    lateinit var name: String
+//    @Inject
+//    @field:Named("lastname")
+//    lateinit var lastname: String
+//}

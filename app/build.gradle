@@ -9,8 +9,8 @@ android {
     buildToolsVersion rootProject.ext.buildtools_version
     defaultConfig {
         applicationId "com.raywenderlich.chuckyfacts"
-        minSdkVersion 19
-        targetSdkVersion 26
+        minSdkVersion rootProject.ext.minsdk_version
+        targetSdkVersion rootProject.ext.targetsdk_version
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

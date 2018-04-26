@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Razeware LLC
+ * Copyright (c) 2018 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,9 @@
 
 package com.raywenderlich.chuckyfacts
 
+import com.github.kittinunf.fuel.android.core.Json
+import com.github.kittinunf.fuel.core.FuelError
+import com.github.kittinunf.result.Result
 import com.raywenderlich.chuckyfacts.entity.Joke
 
 interface MainContract {
@@ -35,17 +38,14 @@ interface MainContract {
     interface Presenter {
         // User actions
         fun listItemClicked(joke: Joke?)
-        // Model updates
+        // View updates
         fun onViewCreated()
+        // Model updates
+        fun onQuerySuccess(data: List<Joke>)
+        fun onQueryError()
     }
 
     interface Interactor {
-        fun loadJokesList()
-        fun setOutputEntity(interactorOutput: MainContract.InteractorOutput)
-    }
-
-    interface InteractorOutput {
-        fun onQuerySuccess(data: List<Joke>)
-        fun onQueryError()
+        fun loadJokesList(queryCallback: (Result<Json, FuelError>) -> Unit)
     }
 }

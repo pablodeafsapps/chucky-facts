@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Razeware LLC
+ * Copyright (c) 2018 Razeware LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ interface DetailContract {
     interface Presenter {
         // User actions
         fun backButtonClicked()
-        // Model updates
+        // View updates
         fun onViewCreated(joke: Joke)
         fun onDestroy()
     }
