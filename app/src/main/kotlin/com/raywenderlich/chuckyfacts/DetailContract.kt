@@ -33,7 +33,7 @@ interface DetailContract {
     interface Presenter {
         // User actions
         fun backButtonClicked()
-        // Model updates
+        // View updates
         fun onViewCreated(joke: Joke)
         fun onDestroy()
     }

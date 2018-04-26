@@ -22,46 +22,24 @@
 
 package com.raywenderlich.chuckyfacts.interactor
 
+import com.github.kittinunf.fuel.android.core.Json
 import com.github.kittinunf.fuel.android.extension.responseJson
+import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
-
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-
 import com.raywenderlich.chuckyfacts.MainContract
-import com.raywenderlich.chuckyfacts.entity.Joke
 
 import javax.inject.Inject
 
 class MainInteractor @Inject constructor() : MainContract.Interactor {
 
     companion object {
-        val icndbUrl = "https://api.icndb.com/jokes"
+        const val icndbUrl = "https://api.icndb.com/jokes"
     }
 
-    lateinit var output: MainContract.InteractorOutput
-
-    override fun loadJokesList() {
+    override fun loadJokesList(queryCallback: (Result<Json, FuelError>) -> Unit) {
         icndbUrl.httpPost().responseJson { _, _, result ->
-            when (result) {
-                is Result.Failure -> {
-                    output.onQueryError()
-                }
-                is Result.Success -> {
-                    val jokesJsonObject = result.get().obj()
-
-                    val type = object : TypeToken<List<Joke>>() {}.type
-                    val jokesList: List<Joke> =
-                            Gson().fromJson(jokesJsonObject.getJSONArray("value").toString(), type)
-
-                    output.onQuerySuccess(jokesList)
-                }
-            }
+            queryCallback(result)
         }
-    }
-
-    override fun setOutputEntity(interactorOutput: MainContract.InteractorOutput) {
-        output = interactorOutput
     }
 }

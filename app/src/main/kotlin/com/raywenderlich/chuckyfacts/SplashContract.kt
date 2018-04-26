@@ -28,7 +28,7 @@ interface SplashContract {
     }
 
     interface Presenter {
-        // Model updates
+        // View updates
         fun onViewCreated()
     }
 }
